@@ -2,7 +2,7 @@
   "name": "electron-meteor",
   "version": "0.1.0",
   "description": "Full Meteor Client for Electron",
-  "main": "dist/Meteor.js",
+  "main": "lib/Meteor.js",
   "scripts": {
     "compile": "./node_modules/.bin/babel --presets es2015,stage-0,react -d dist/ src/",
     "prepublish": "npm run build",
