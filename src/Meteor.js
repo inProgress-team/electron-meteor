@@ -1,5 +1,5 @@
 
-import { NetInfo, Platform, View } from 'react-native';
+//import { NetInfo } from 'react-native';
 
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
@@ -12,8 +12,6 @@ import collection from './Collection';
 import call from './Call';
 
 import Mixin from './components/Mixin';
-import ListView from './components/ListView';
-import MeteorComplexListView from './components/ComplexListView';
 import createContainer from './components/createContainer';
 
 import FSCollection from './CollectionFS/FSCollection';
@@ -25,9 +23,7 @@ import Accounts from './user/Accounts';
 
 module.exports = {
   Accounts: Accounts,
-  MeteorListView: ListView,
-  MeteorComplexListView: MeteorComplexListView,
-  FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,
+  FSCollectionImagesPreloader: FSCollectionImagesPreloader,
   collection: collection,
   FSCollection: FSCollection,
   createContainer: createContainer,
@@ -37,7 +33,7 @@ module.exports = {
   connectMeteor(reactClass) {
     return reactMixin.onClass(reactClass, Mixin);
   },
-  User,
+  ...User,
   status() {
     return {
       connected: Data.ddp ? Data.ddp.status=="connected" : false,
@@ -90,11 +86,15 @@ module.exports = {
       ...options
     });
 
+    this.subscribe('_roles');
+    //TODO
+    /*
     NetInfo.isConnected.addEventListener('change', isConnected=>{
       if(isConnected) {
         Data.ddp.connect();
       }
     });
+    */
 
 
     Data.ddp.on("connected", ()=>{
@@ -285,3 +285,5 @@ module.exports = {
 
   }
 }
+
+

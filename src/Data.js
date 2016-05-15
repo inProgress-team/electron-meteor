@@ -1,10 +1,10 @@
-import React from 'react-native';
+import React from 'react';
 import minimongo from 'minimongo-cache';
 process.nextTick = setImmediate;
 
 const db = new minimongo();
 db.debug = false;
-db.batchedUpdates = React.addons.batchedUpdates;
+//db.batchedUpdates = React.addons.batchedUpdates;
 
 export default {
   _endpoint: null,

@@ -1,4 +1,5 @@
-import { AsyncStorage } from 'react-native';
+//import { AsyncStorage } from 'react-native';
+import storage from 'electron-json-storage';
 
 import Data from '../Data';
 import { hashPassword } from '../../lib/utils';
@@ -30,7 +31,7 @@ module.exports = {
     });
   },
   handleLogout() {
-    AsyncStorage.removeItem(TOKEN_KEY);
+    storage.remove(TOKEN_KEY);
     Data._tokenIdSaved = null;
     this._userIdSaved = null;
   },
@@ -75,7 +76,8 @@ module.exports = {
   },
   _handleLoginCallback(err, result) {
     if(!err) {//save user id and token
-      AsyncStorage.setItem(TOKEN_KEY, result.token);
+      storage.set(TOKEN_KEY, {token: result.token});
+      console.log('set', TOKEN_KEY, result.token);
       Data._tokenIdSaved = result.token;
       this._userIdSaved = result.id;
       Data.notify('onLogin');
@@ -87,11 +89,23 @@ module.exports = {
   },
   async _loadInitialUser() {
     var value = null;
+
     try {
-      value = await AsyncStorage.getItem(TOKEN_KEY);
+      const getStorage = function() {
+        return new Promise(function(resolve, reject) {
+          storage.get(TOKEN_KEY, function(err, res, a, b) {
+            console.log('GET', err, res);
+            resolve(res)
+          });
+        })
+      }
+      value = await getStorage();
+      value = value.token;
+      console.log('plouf', value, TOKEN_KEY);
     } catch (error) {
-      console.warn('AsyncStorage error: ' + error.message);
+      console.warn('json-storage error: ' + error.message);
     } finally {
+      console.log('value', value);
       Data._tokenIdSaved = value;
       if (value !== null){
         this._startLoggingIn();

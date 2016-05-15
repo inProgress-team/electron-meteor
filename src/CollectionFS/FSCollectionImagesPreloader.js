@@ -2,12 +2,8 @@
 
 import React, {
   Component,
-  PropTypes,
-  View,
-  Image,
-  StyleSheet
-} from 'react-native';
-
+  PropTypes
+} from 'react';
 
 import Data from '../Data';
 import setProperties from './setProperties';
@@ -55,24 +51,7 @@ export default class FSCollectionImagesPreloader extends Component {
     const { items } = this.state;
 
     return (
-      <View style={styles.hidden}>
-        {items && items.map(item=>{
-          return (
-            <Image style={styles.hidden} key={item._id} source={{uri: item.url()}} />
-          );
-        })}
-      </View>
+      <img src={item.url()} style={{width:1, height: 1, position: 'absolute', top:'-5000px', left:'-5000px'}} />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  hidden: {
-    width: 1,
-    height: 1,
-    position: 'absolute',
-    top: -100000,
-    left: -10000,
-    opacity: 0
-  }
-})

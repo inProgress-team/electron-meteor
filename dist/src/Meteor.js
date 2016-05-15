@@ -1,9 +1,8 @@
 'use strict';
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-//import FSCollectionImagesPreloader from './CollectionFS/FSCollectionImagesPreloader';
+var _extends2 = require('babel-runtime/helpers/extends');
 
-var _reactNative = require('react-native');
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _reactMixin = require('react-mixin');
 
@@ -49,6 +48,10 @@ var _FSCollection = require('./CollectionFS/FSCollection');
 
 var _FSCollection2 = _interopRequireDefault(_FSCollection);
 
+var _FSCollectionImagesPreloader = require('./CollectionFS/FSCollectionImagesPreloader');
+
+var _FSCollectionImagesPreloader2 = _interopRequireDefault(_FSCollectionImagesPreloader);
+
 var _User = require('./user/User');
 
 var _User2 = _interopRequireDefault(_User);
@@ -59,9 +62,11 @@ var _Accounts2 = _interopRequireDefault(_Accounts);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = {
+//import { NetInfo } from 'react-native';
+
+module.exports = (0, _extends3.default)({
   Accounts: _Accounts2.default,
-  //FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,
+  FSCollectionImagesPreloader: _FSCollectionImagesPreloader2.default,
   collection: _Collection2.default,
   FSCollection: _FSCollection2.default,
   createContainer: _createContainer2.default,
@@ -70,9 +75,8 @@ module.exports = {
   },
   connectMeteor: function connectMeteor(reactClass) {
     return _reactMixin2.default.onClass(reactClass, _Mixin2.default);
-  },
-
-  User: _User2.default,
+  }
+}, _User2.default, {
   status: function status() {
     return {
       connected: _Data2.default.ddp ? _Data2.default.ddp.status == "connected" : false,
@@ -122,11 +126,12 @@ module.exports = {
     _Data2.default._endpoint = endpoint;
     _Data2.default._options = options;
 
-    this.ddp = _Data2.default.ddp = new _ddp2.default(_extends({
+    this.ddp = _Data2.default.ddp = new _ddp2.default((0, _extends3.default)({
       endpoint: endpoint,
       SocketConstructor: WebSocket
     }, options));
 
+    this.subscribe('_roles');
     //TODO
     /*
     NetInfo.isConnected.addEventListener('change', isConnected=>{
@@ -158,7 +163,7 @@ module.exports = {
       if (!_Data2.default.db[message.collection]) {
         _Data2.default.db.addCollection(message.collection);
       }
-      _Data2.default.db[message.collection].upsert(_extends({ _id: message.id }, message.fields));
+      _Data2.default.db[message.collection].upsert((0, _extends3.default)({ _id: message.id }, message.fields));
     });
 
     _Data2.default.ddp.on("ready", function (message) {
@@ -172,7 +177,7 @@ module.exports = {
     });
 
     _Data2.default.ddp.on("changed", function (message) {
-      _Data2.default.db[message.collection].upsert(_extends({ _id: message.id }, message.fields));
+      _Data2.default.db[message.collection].upsert((0, _extends3.default)({ _id: message.id }, message.fields));
     });
 
     _Data2.default.ddp.on("removed", function (message) {
@@ -316,4 +321,4 @@ module.exports = {
 
     return handle;
   }
-};
+});
