@@ -77,7 +77,6 @@ module.exports = {
   _handleLoginCallback(err, result) {
     if(!err) {//save user id and token
       storage.set(TOKEN_KEY, {token: result.token});
-      console.log('set', TOKEN_KEY, result.token);
       Data._tokenIdSaved = result.token;
       this._userIdSaved = result.id;
       Data.notify('onLogin');
@@ -93,19 +92,16 @@ module.exports = {
     try {
       const getStorage = function() {
         return new Promise(function(resolve, reject) {
-          storage.get(TOKEN_KEY, function(err, res, a, b) {
-            console.log('GET', err, res);
+          storage.get(TOKEN_KEY, function(err, res) {
             resolve(res)
           });
         })
       }
       value = await getStorage();
       value = value.token;
-      console.log('plouf', value, TOKEN_KEY);
     } catch (error) {
       console.warn('json-storage error: ' + error.message);
     } finally {
-      console.log('value', value);
       Data._tokenIdSaved = value;
       if (value !== null){
         this._startLoggingIn();

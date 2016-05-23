@@ -1,6 +1,6 @@
 {
   "name": "electron-meteor",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Full Meteor Client for Electron",
   "main": "dist/src/Meteor.js",
   "scripts": {

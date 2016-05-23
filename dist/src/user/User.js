@@ -101,7 +101,6 @@ module.exports = {
     if (!err) {
       //save user id and token
       _electronJsonStorage2.default.set(TOKEN_KEY, { token: result.token });
-      console.log('set', TOKEN_KEY, result.token);
       _Data2.default._tokenIdSaved = result.token;
       this._userIdSaved = result.id;
       _Data2.default.notify('onLogin');
@@ -125,8 +124,7 @@ module.exports = {
 
               getStorage = function getStorage() {
                 return new Promise(function (resolve, reject) {
-                  _electronJsonStorage2.default.get(TOKEN_KEY, function (err, res, a, b) {
-                    console.log('GET', err, res);
+                  _electronJsonStorage2.default.get(TOKEN_KEY, function (err, res) {
                     resolve(res);
                   });
                 });
@@ -139,20 +137,18 @@ module.exports = {
               value = _context.sent;
 
               value = value.token;
-              console.log('plouf', value, TOKEN_KEY);
-              _context.next = 13;
+              _context.next = 12;
               break;
 
-            case 10:
-              _context.prev = 10;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context['catch'](1);
 
               console.warn('json-storage error: ' + _context.t0.message);
 
-            case 13:
-              _context.prev = 13;
+            case 12:
+              _context.prev = 12;
 
-              console.log('value', value);
               _Data2.default._tokenIdSaved = value;
               if (value !== null) {
                 _this4._startLoggingIn();
@@ -163,14 +159,14 @@ module.exports = {
               } else {
                 _this4._endLoggingIn();
               }
-              return _context.finish(13);
+              return _context.finish(12);
 
-            case 18:
+            case 16:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, _this4, [[1, 10, 13, 18]]);
+      }, _callee, _this4, [[1, 9, 12, 16]]);
     }))();
   }
 };
